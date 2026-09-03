@@ -34,21 +34,21 @@ externa contendo esses arquivos; eles precisam ficar diretamente na raiz.
 
 1. No GitHub, abra **Settings → Actions → General**.
 2. Em **Workflow permissions**, selecione **Read and write permissions**.
-3. Marque **Allow GitHub Actions to create and approve pull requests**.
-4. Clique em **Save**.
-5. Abra a aba **Actions** e confirme a execução verde de
+3. Clique em **Save**.
+4. Abra a aba **Actions** e confirme a execução verde de
    **Validar repositório**.
 
 Há três automações:
 
 - `Gerar novos slots`: cria e salva novos diretórios quando `slots.yaml` sobe.
 - `Sincronizar Zigbee2MQTT oficial`: verifica diariamente a App estável oficial
-  e abre um Pull Request se houver mudança.
+  e publica a nova versão diretamente no branch `main` se houver mudança.
 - `Validar repositório`: impede slugs duplicados, lacunas e dados compartilhados.
 
-A atualização oficial não entra automaticamente em produção. Leia o changelog,
-teste em um HAOS piloto e só então clique em **Merge pull request**. Depois do
-merge, os HAOS verão a nova versão quando atualizarem a loja.
+A atualização oficial é publicada automaticamente. Depois da sincronização, os
+HAOS verão a nova versão quando atualizarem os metadados da loja. Antes de
+atualizar uma App de produção, mantenha backups e faça o piloto em um slot de
+laboratório.
 
 ## 3. Adicionar o repositório no HAOS
 
@@ -148,17 +148,15 @@ arquivos de volta com uma das Apps em execução.
 
 Para separar o risco de migração do risco de upgrade:
 
-1. No GitHub, abra o Pull Request automático de atualização, se existir, e não o
-   mescle ainda.
-2. Descubra a tag da App oficial que corresponde à versão antiga, por exemplo
+1. Descubra a tag da App oficial que corresponde à versão antiga, por exemplo
    `v2.14.0-1`; confirme que ela realmente existe em **Tags** no repositório
    oficial.
-3. Em `upstream.yaml`, troque temporariamente `ref: master` por
+2. Em `upstream.yaml`, troque temporariamente `ref: master` por
    `ref: vVERSAO-DA-APP`. A automação regenerará todos os slots nessa versão.
-4. Valide em laboratório e migre. Não invente uma versão: a tag e a respectiva
+3. Valide em laboratório e migre. Não invente uma versão: a tag e a respectiva
    imagem precisam existir no repositório oficial.
-5. Depois de validar a migração, volte `upstream.yaml` para `ref: master`, revise
-   a atualização automática e atualize a nova App pelo fluxo normal.
+4. Depois de validar a migração, volte `upstream.yaml` para `ref: master`. A
+   sincronização seguinte publicará automaticamente a versão estável atual.
 
 ## 9. Aumentar de 15 para N slots
 

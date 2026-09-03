@@ -39,6 +39,5 @@ Validado em 3 de setembro de 2026 contra as fontes oficiais abaixo.
 - A imagem é baixada do namespace oficial; este repositório não a recompila.
 - `/addon_config` é uma montagem diferente para cada slug, eliminando colisão
   entre as quinze instâncias.
-- A sincronização abre Pull Request para permitir piloto e rollback antes do
-  merge.
-
+- A sincronização publica diretamente no `main`; backups e um slot de laboratório
+  são a proteção antes de atualizar as Apps instaladas em produção.

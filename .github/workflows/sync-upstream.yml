@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
 
 concurrency:
   group: sync-upstream
@@ -23,15 +22,7 @@ jobs:
       - name: Ler versão sincronizada
         id: version
         run: echo "value=$(jq -r .version tmh_zigbee2mqtt_01/config.json)" >> "$GITHUB_OUTPUT"
-      - name: Abrir atualização para revisão
-        uses: peter-evans/create-pull-request@v8
+      - name: Publicar atualização oficial
+        uses: stefanzweifel/git-auto-commit-action@v6
         with:
-          branch: automation/sync-zigbee2mqtt
-          delete-branch: true
-          commit-message: "chore: sincronizar Zigbee2MQTT ${{ steps.version.outputs.value }}"
-          title: "Atualizar Zigbee2MQTT para ${{ steps.version.outputs.value }}"
-          body: |
-            Sincronização automática da App oficial estável.
-
-            Antes de mesclar, revise o changelog e teste em uma instalação piloto.
-          labels: upstream-update
+          commit_message: "chore: sincronizar Zigbee2MQTT ${{ steps.version.outputs.value }}"
