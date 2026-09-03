@@ -17,14 +17,14 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Sincronizar todos os slots
         run: python3 scripts/maintain.py
       - name: Ler versão sincronizada
         id: version
         run: echo "value=$(jq -r .version tmh_zigbee2mqtt_01/config.json)" >> "$GITHUB_OUTPUT"
       - name: Abrir atualização para revisão
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           branch: automation/sync-zigbee2mqtt
           delete-branch: true
@@ -35,4 +35,3 @@ jobs:
 
             Antes de mesclar, revise o changelog e teste em uma instalação piloto.
           labels: upstream-update
-
