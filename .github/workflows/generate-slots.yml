@@ -1,0 +1,31 @@
+name: Gerar novos slots
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - slots.yaml
+      - upstream.yaml
+      - repository.yaml
+      - scripts/maintain.py
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: generate-slots
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Gerar e atualizar slots
+        run: python3 scripts/maintain.py
+      - name: Salvar arquivos gerados
+        uses: stefanzweifel/git-auto-commit-action@v6
+        with:
+          commit_message: "chore: gerar slots definidos em slots.yaml"
