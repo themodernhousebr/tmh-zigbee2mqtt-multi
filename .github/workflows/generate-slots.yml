@@ -26,6 +26,13 @@ jobs:
       - name: Gerar e atualizar slots
         run: python3 scripts/maintain.py
       - name: Salvar arquivos gerados
-        uses: stefanzweifel/git-auto-commit-action@v6
-        with:
-          commit_message: "chore: gerar slots definidos em slots.yaml"
+        run: |
+          if test -z "$(git status --porcelain -- tmh_zigbee2mqtt_*)"; then
+            echo "Nenhum novo slot para publicar."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- tmh_zigbee2mqtt_*
+          git commit -m "chore: gerar slots definidos em slots.yaml"
+          git push

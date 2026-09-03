@@ -23,6 +23,13 @@ jobs:
         id: version
         run: echo "value=$(jq -r .version tmh_zigbee2mqtt_01/config.json)" >> "$GITHUB_OUTPUT"
       - name: Publicar atualização oficial
-        uses: stefanzweifel/git-auto-commit-action@v6
-        with:
-          commit_message: "chore: sincronizar Zigbee2MQTT ${{ steps.version.outputs.value }}"
+        run: |
+          if test -z "$(git status --porcelain -- tmh_zigbee2mqtt_*)"; then
+            echo "Nenhuma atualização oficial encontrada."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- tmh_zigbee2mqtt_*
+          git commit -m "chore: sincronizar Zigbee2MQTT ${{ steps.version.outputs.value }}"
+          git push
