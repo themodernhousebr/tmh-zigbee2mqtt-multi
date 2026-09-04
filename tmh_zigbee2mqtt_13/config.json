@@ -1,6 +1,6 @@
 {
   "name": "TMH Zigbee2MQTT 13",
-  "version": "2.14.0-1",
+  "version": "2.14.1-1",
   "slug": "tmh_zigbee2mqtt_13",
   "description": "Instância isolada 13 do Zigbee2MQTT",
   "breaking_versions": [

@@ -1,6 +1,6 @@
 {
   "name": "TMH Zigbee2MQTT 09",
-  "version": "2.14.0-1",
+  "version": "2.14.1-1",
   "slug": "tmh_zigbee2mqtt_09",
   "description": "Instância isolada 09 do Zigbee2MQTT",
   "breaking_versions": [
