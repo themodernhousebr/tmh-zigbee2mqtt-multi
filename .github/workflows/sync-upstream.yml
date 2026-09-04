@@ -2,7 +2,7 @@ name: Sincronizar Zigbee2MQTT oficial
 
 on:
   schedule:
-    - cron: "17 10 * * *"
+    - cron: "37 */6 * * *"
   workflow_dispatch:
 
 permissions:
@@ -19,6 +19,8 @@ jobs:
       - uses: actions/checkout@v6
       - name: Sincronizar todos os slots
         run: python3 scripts/maintain.py
+      - name: Validar arquivos sincronizados
+        run: python3 scripts/validate.py
       - name: Ler versão sincronizada
         id: version
         run: echo "value=$(jq -r .version tmh_zigbee2mqtt_01/config.json)" >> "$GITHUB_OUTPUT"

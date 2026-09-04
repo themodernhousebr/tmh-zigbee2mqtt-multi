@@ -41,7 +41,7 @@ externa contendo esses arquivos; eles precisam ficar diretamente na raiz.
 Há três automações:
 
 - `Gerar novos slots`: cria e salva novos diretórios quando `slots.yaml` sobe.
-- `Sincronizar Zigbee2MQTT oficial`: verifica diariamente a App estável oficial
+- `Sincronizar Zigbee2MQTT oficial`: verifica a cada seis horas a App estável oficial
   e publica a nova versão diretamente no branch `main` se houver mudança.
 - `Validar repositório`: impede slugs duplicados, lacunas e dados compartilhados.
 
